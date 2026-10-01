@@ -56,11 +56,11 @@ RUN mkdir -p \
     && chmod -R 775 storage bootstrap/cache
 
 # Build frontend assets
-RUN apt-get update && apt-get install -y nodejs npm \
-    && npm install \
-    && npm run production \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && apt-get install -y nodejs npm \
+#     && npm install \
+#     && npm run production \
+#     && apt-get clean \
+#     && rm -rf /var/lib/apt/lists/*
 
 # Laravel public directory
 ENV SERVER_NAME=:80
