@@ -25,14 +25,13 @@
   <link rel="stylesheet" href="<?php echo asset('public/vendor/font-awesome/css/font-awesome.min.css') ?>"
     type="text/css">
   <!-- Fontastic Custom icon font-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/fontastic.css') ?>" type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/fontastic.css') ?>" type="text/css">
   <!-- Ion icon font-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/ionicons.min.css') ?>" type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/ionicons.min.css') ?>" type="text/css">
   <!-- Google fonts - Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
   <!-- jQuery Circle-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/grasp_mobile_progress_circle-1.0.0.min.css') ?>"
-    type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/grasp_mobile_progress_circle-1.0.0.min.css') ?>" type="text/css">
   <!-- Custom Scrollbar-->
   <link rel="stylesheet"
     href="<?php echo asset('public/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') ?>"
@@ -52,14 +51,13 @@
   <link rel="stylesheet" type="text/css"
     href="<?php echo asset('public/vendor/datatable/dataTables.checkboxes.css') ?>">
   <!-- theme stylesheet-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/style.default.css') ?>" id="theme-stylesheet"
-    type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/style.default.css') ?>" id="theme-stylesheet" type="text/css">
   <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/custom-'.$general_setting->theme) ?>" type="text/css"
+  <link rel="stylesheet" href="<?php echo asset('css/custom-'.$general_setting->theme) ?>" type="text/css"
     id="custom-style">
-  <link rel="stylesheet" href="<?php echo asset('public/css/dropzone.css') ?>">
+  <link rel="stylesheet" href="<?php echo asset('css/dropzone.css') ?>">
   </link>
-  <link rel="stylesheet" href="<?php echo asset('public/css/style.css') ?>">
+  <link rel="stylesheet" href="<?php echo asset('css/style.css') ?>">
   </link>
   @yield('css')
   <!-- Tweaks for older IEs-->
@@ -81,7 +79,7 @@
   <script type="text/javascript" src="<?php echo asset('public/vendor/keyboard/js/jquery.keyboard.js') ?>"></script>
   <script type="text/javascript"
     src="<?php echo asset('public/vendor/keyboard/js/jquery.keyboard.extension-autocomplete.js') ?>"></script>
-  <script type="text/javascript" src="<?php echo asset('public/js/grasp_mobile_progress_circle-1.0.0.min.js') ?>">
+  <script type="text/javascript" src="<?php echo asset('js/grasp_mobile_progress_circle-1.0.0.min.js') ?>">
   </script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/jquery.cookie/jquery.cookie.js') ?>">
   </script>
@@ -91,14 +89,14 @@
   <script type="text/javascript"
     src="<?php echo asset('public/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>">
   </script>
-  <script type="text/javascript" src="<?php echo asset('public/js/charts-custom.js') ?>"></script>
-  <script type="text/javascript" src="<?php echo asset('public/js/front.js') ?>"></script>
+  <script type="text/javascript" src="<?php echo asset('js/charts-custom.js') ?>"></script>
+  <script type="text/javascript" src="<?php echo asset('js/front.js') ?>"></script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/daterange/js/moment.min.js') ?>"></script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/daterange/js/knockout-3.4.2.js') ?>"></script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/daterange/js/daterangepicker.min.js') ?>">
   </script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/tinymce/js/tinymce/tinymce.min.js') ?>"></script>
-  <script type="text/javascript" src="<?php echo asset('public/js/dropzone.js') ?>"></script>
+  <script type="text/javascript" src="<?php echo asset('js/dropzone.js') ?>"></script>
 
   <!-- table sorter js-->
   <script type="text/javascript" src="<?php echo asset('public/vendor/datatable/pdfmake.min.js') ?>"></script>

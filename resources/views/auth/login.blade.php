@@ -19,21 +19,19 @@
   <link rel="stylesheet" href="<?php echo asset('public/vendor/font-awesome/css/font-awesome.min.css') ?>"
     type="text/css">
   <!-- Fontastic Custom icon font-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/fontastic.css') ?>" type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/fontastic.css') ?>" type="text/css">
   <!-- Google fonts - Roboto -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
   <!-- jQuery Circle-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/grasp_mobile_progress_circle-1.0.0.min.css') ?>"
-    type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/grasp_mobile_progress_circle-1.0.0.min.css') ?>" type="text/css">
   <!-- Custom Scrollbar-->
   <link rel="stylesheet"
     href="<?php echo asset('public/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css') ?>"
     type="text/css">
   <!-- theme stylesheet-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/style.default.css') ?>" id="theme-stylesheet"
-    type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/style.default.css') ?>" id="theme-stylesheet" type="text/css">
   <!-- Custom stylesheet - for your changes-->
-  <link rel="stylesheet" href="<?php echo asset('public/css/custom-'.$general_setting->theme) ?>" type="text/css">
+  <link rel="stylesheet" href="<?php echo asset('css/custom-'.$general_setting->theme) ?>" type="text/css">
   <!-- Favicon-->
   <link rel="shortcut icon" href="img/favicon.ico">
   <!-- Tweaks for older IEs-->
@@ -49,7 +47,7 @@
   <script type="text/javascript" src="<?php echo asset('public/vendor/bootstrap/js/bootstrap.min.js') ?>"></script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/bootstrap/js/bootstrap-select.min.js') ?>">
   </script>
-  <script type="text/javascript" src="<?php echo asset('public/js/grasp_mobile_progress_circle-1.0.0.min.js') ?>">
+  <script type="text/javascript" src="<?php echo asset('js/grasp_mobile_progress_circle-1.0.0.min.js') ?>">
   </script>
   <script type="text/javascript" src="<?php echo asset('public/vendor/jquery.cookie/jquery.cookie.js') ?>">
   </script>
@@ -59,8 +57,8 @@
   <script type="text/javascript"
     src="<?php echo asset('public/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js')?>">
   </script>
-  <script type="text/javascript" src="<?php echo asset('public/js/charts-home.js') ?>"></script>
-  <script type="text/javascript" src="<?php echo asset('public/js/front.js') ?>"></script>
+  <script type="text/javascript" src="<?php echo asset('js/charts-home.js') ?>"></script>
+  <script type="text/javascript" src="<?php echo asset('js/front.js') ?>"></script>
 </head>
 
 <body>
