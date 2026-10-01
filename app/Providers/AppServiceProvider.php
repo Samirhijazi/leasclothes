@@ -25,21 +25,55 @@ class AppServiceProvider extends ServiceProvider
         //
     }
 
+    //for vercel
     public function boot()
     {
-        //setting language
-        if(isset($_COOKIE['language'])) {
+        // setting language
+        if (isset($_COOKIE['language'])) {
             \App::setLocale($_COOKIE['language']);
         } else {
             \App::setLocale('en');
         }
-        //get general setting value        
-        $general_setting = DB::table('general_settings')->latest()->first();
-        View::share('general_setting', $general_setting);
-        config(['staff_access' => $general_setting->staff_access, 'date_format' => $general_setting->date_format]);
-        
-        $alert_product = DB::table('products')->where('is_active', true)->whereColumn('alert_quantity', '>', 'qty')->count();
-        View::share('alert_product', $alert_product);
+
+        // Database-dependent settings
+        if (app()->runningInConsole() === false) {
+            $general_setting = DB::table('general_settings')->latest()->first();
+
+            View::share('general_setting', $general_setting);
+
+            if ($general_setting) {
+                config([
+                    'staff_access' => $general_setting->staff_access,
+                    'date_format' => $general_setting->date_format,
+                ]);
+            }
+
+            $alert_product = DB::table('products')
+                ->where('is_active', true)
+                ->whereColumn('alert_quantity', '>', 'qty')
+                ->count();
+
+            View::share('alert_product', $alert_product);
+        }
+
         Schema::defaultStringLength(191);
     }
+
+    // public function boot()
+    // {
+    //     //setting language
+    //     if(isset($_COOKIE['language'])) {
+    //         \App::setLocale($_COOKIE['language']);
+    //     } else {
+    //         \App::setLocale('en');
+    //     }
+    //     //get general setting value        
+    //     $general_setting = DB::table('general_settings')->latest()->first();
+    //     View::share('general_setting', $general_setting);
+    //     config(['staff_access' => $general_setting->staff_access, 'date_format' => $general_setting->date_format]);
+
+    //     $alert_product = DB::table('products')->where('is_active', true)->whereColumn('alert_quantity', '>', 'qty')->count();
+    //     View::share('alert_product', $alert_product);
+    //     Schema::defaultStringLength(191);
+    // }
 }

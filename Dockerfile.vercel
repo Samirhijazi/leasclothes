@@ -40,7 +40,11 @@ RUN composer install \
     --no-dev \
     --no-interaction \
     --prefer-dist \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --no-scripts
+
+# Discover Laravel packages
+RUN php artisan package:discover
 
 # Create Laravel writable directories
 RUN mkdir -p \
