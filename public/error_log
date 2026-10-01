@@ -1,0 +1,16 @@
+[25-Jul-2023 17:17:50 UTC] PHP Fatal error:  During inheritance of ArrayAccess: Uncaught ErrorException: Return type of Illuminate\Support\Collection::offsetExists($key) should either be compatible with ArrayAccess::offsetExists(mixed $offset): bool, or the #[\ReturnTypeWillChange] attribute should be used to temporarily suppress the notice in /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Support/Collection.php:1789
+Stack trace:
+#0 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Support/Collection.php(42): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(8192, 'Return type of ...', '/home1/itechno3...', 1789)
+#1 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/composer/ClassLoader.php(444): include('/home1/itechno3...')
+#2 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/composer/ClassLoader.php(322): Composer\Autoload\includeFile('/home1/itechno3...')
+#3 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Support/helpers.php(423): Composer\Autoload\ClassLoader->loadClass('Illuminate\\Supp...')
+#4 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(121): collect(Array)
+#5 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(97): Illuminate\Foundation\PackageManifest->build()
+#6 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/PackageManifest.php(80): Illuminate\Foundation\PackageManifest->getManifest()
+#7 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/RegisterFacades.php(26): Illuminate\Foundation\PackageManifest->aliases()
+#8 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(206): Illuminate\Foundation\Bootstrap\RegisterFacades->bootstrap(Object(Illuminate\Foundation\Application))
+#9 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(162): Illuminate\Foundation\Application->bootstrapWith(Array)
+#10 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(146): Illuminate\Foundation\Http\Kernel->bootstrap()
+#11 /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\Foundation\Http\Kernel->sendRequestThroughRouter(Object(Illuminate\Http\Request))
+#12 /home1/itechno3/public_html/woa-itechnologyleb-com/public/index.php(54): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
+#13 {main} in /home1/itechno3/public_html/woa-itechnologyleb-com/vendor/laravel/framework/src/Illuminate/Support/Collection.php on line 42
