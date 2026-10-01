@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class active
+class Active
 {
     /**
      * Handle an incoming request.
@@ -16,12 +16,10 @@ class active
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->isActive()){
+        if (Auth::check() && Auth::user()->isActive()) {
             return $next($request);
         }
 
         return redirect('/dashboard');
-        
     }
 }
-
