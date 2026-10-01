@@ -1,15 +1,18 @@
 @extends('layout.main') @section('content')
 @if(session()->has('message'))
-  <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{!! session()->get('message') !!}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{!! session()->get('message') !!}</div>
 @endif
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 
 <section>
     {{-- <div class="container-fluid">
         @if(in_array("returns-add", $all_permission))
-            <a href="{{route('return-sale.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {{trans('file.Add Return')}}</a>
+        <a href="{{route('return-sale.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {{trans('file.Add
+            Return')}}</a>
         @endif
     </div> --}}
     <div class="table-responsive">
@@ -28,40 +31,47 @@
             </thead>
             <tbody>
                 @foreach($lims_return_all as $key=>$return)
-                <tr class="return-link" data-return='["{{date($general_setting->date_format, strtotime($return->created_at->toDateString()))}}", "{{$return->reference_no}}", "{{$return->warehouse->name}}", "{{$return->biller->name}}", "{{$return->biller->company_name}}","{{$return->biller->email}}", "{{$return->biller->phone_number}}", "{{$return->biller->address}}", "{{$return->biller->city}}", "{{$return->return_id}}", "{{$return->total_tax}}", "{{$return->total_discount}}", "{{$return->total_price}}", "{{$return->order_tax}}", "{{$return->order_tax_rate}}", "{{$return->grand_total}}", "{{$return->return_note}}", "{{$return->staff_note}}", "{{$return->user->name}}", "{{$return->user->email}}"]'>
+                <tr class="return-link"
+                    data-return='["{{date($general_setting->date_format, strtotime($return->created_at->toDateString()))}}", "{{$return->reference_no}}", "{{$return->warehouse->name}}", "{{$return->biller->name}}", "{{$return->biller->company_name}}","{{$return->biller->email}}", "{{$return->biller->phone_number}}", "{{$return->biller->address}}", "{{$return->biller->city}}", "{{$return->return_id}}", "{{$return->total_tax}}", "{{$return->total_discount}}", "{{$return->total_price}}", "{{$return->order_tax}}", "{{$return->order_tax_rate}}", "{{$return->grand_total}}", "{{$return->return_note}}", "{{$return->staff_note}}", "{{$return->user->name}}", "{{$return->user->email}}"]'>
                     <td>{{$key}}</td>
-                    <td>{{ date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '. $return->created_at->toTimeString() }}</td>
+                    <td>{{ date($general_setting->date_format, strtotime($return->created_at->toDateString())) . ' '.
+                        $return->created_at->toTimeString() }}</td>
                     <td>{{ $return->reference_no }}</td>
                     {{-- <td>{{ $return->biller->name }}</td> --}}
                     <td>{{ $return->user->name }}</td>
                     @if (isset($return->customer->name))
-                        <td>{{$return->customer->name}}</td>
+                    <td>{{$return->customer->name}}</td>
                     @else
-                        <td>None</td>
+                    <td>None</td>
                     @endif
                     {{-- <td>{{ $return->customer->name }}</td> --}}
                     <td>{{$return->warehouse->name}}</td>
                     <td class="grand-total">{{ $return->total }}</td>
                     <td>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{trans('file.action')}}
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">{{trans('file.action')}}
                                 <span class="caret"></span>
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">
                                 <li>
-                                    <button type="button" class="btn btn-link view"><i class="fa fa-eye"></i> {{trans('file.View')}}</button>
+                                    <button type="button" class="btn btn-link view"><i class="fa fa-eye"></i>
+                                        {{trans('file.View')}}</button>
                                 </li>
                                 @if(in_array("returns-edit", $all_permission))
                                 <li>
-                                    <a href="{{ url('return-sale/' . $return->return_id . '/edit') }}" class="btn btn-link"><i class="fa fa-edit"></i> {{trans('file.edit')}}</a>
+                                    <a href="{{ url('return-sale/' . $return->return_id . '/edit') }}"
+                                        class="btn btn-link"><i class="fa fa-edit"></i> {{trans('file.edit')}}</a>
                                 </li>
                                 @endif
                                 <li class="divider"></li>
                                 @if(in_array("returns-delete", $all_permission))
-                                {{ Form::open(['route' => ['return-sale.destroy', $return->return_id], 'method' => 'DELETE'] ) }}
+                                {{ Form::open(['route' => ['return-sale.destroy', $return->return_id], 'method' =>
+                                'DELETE'] ) }}
                                 <li>
-                                    <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i class="fa fa-trash"></i> {{trans('file.delete')}}</button>
+                                    <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i
+                                            class="fa fa-trash"></i> {{trans('file.delete')}}</button>
                                 </li>
                                 {{ Form::close() }}
                                 @endif
@@ -83,29 +93,35 @@
             </tfoot>
         </table>
     </div>
-    <div id="return-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+    <div id="return-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        class="modal fade text-left">
         <div role="document" class="modal-dialog">
-          <div class="modal-content">
-            <div class="container mt-3 pb-2 border-bottom">
-            <div class="row">
-                <div class="col-md-3">
-                    <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="fa fa-print"></i> {{trans('file.Print')}}</button>
-                    {{ Form::open(['route' => 'return-sale.sendmail', 'method' => 'post', 'class' => 'sendmail-form'] ) }}
-                        <input type="hidden" name="return_id">
-                        <button class="btn btn-default btn-sm d-print-none"><i class="fa fa-envelope"></i> {{trans('file.Email')}}</button>
-                    {{ Form::close() }}
+            <div class="modal-content">
+                <div class="container mt-3 pb-2 border-bottom">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i
+                                    class="fa fa-print"></i> {{trans('file.Print')}}</button>
+                            {{ Form::open(['route' => 'return-sale.sendmail', 'method' => 'post', 'class' =>
+                            'sendmail-form'] ) }}
+                            <input type="hidden" name="return_id">
+                            <button class="btn btn-default btn-sm d-print-none"><i class="fa fa-envelope"></i>
+                                {{trans('file.Email')}}</button>
+                            {{ Form::close() }}
+                        </div>
+                        <div class="col-md-6">
+                            <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">
+                                {{$general_setting->site_title}}</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close"
+                                class="close d-print-none"><span aria-hidden="true">×</span></button>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <i style="font-size: 15px;">{{trans('file.Return Details')}}</i>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">{{$general_setting->site_title}}</h3>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close d-print-none"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="col-md-12 text-center">
-                    <i style="font-size: 15px;">{{trans('file.Return Details')}}</i>
-                </div>
-            </div>
-        </div>
                 <div id="return-content" class="modal-body">
                 </div>
                 <br>
@@ -123,7 +139,7 @@
                     </tbody>
                 </table>
                 <div id="return-footer" class="modal-body"></div>
-          </div>
+            </div>
         </div>
     </div>
 </section>
@@ -163,7 +179,7 @@
           var divToPrint=document.getElementById('return-details');
           var newWin=window.open('','Print-Window');
           newWin.document.open();
-          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('public/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
+          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
           newWin.document.close();
           setTimeout(function(){newWin.close();},10);
     });

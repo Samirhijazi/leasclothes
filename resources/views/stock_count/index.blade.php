@@ -1,14 +1,17 @@
 @extends('layout.main') @section('content')
 @if(session()->has('message'))
-  <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div>
 @endif
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 
 <section>
     <div class="container-fluid">
-        <button class="btn btn-info" data-toggle="modal" data-target="#createModal"><i class="fa fa-plus"></i> {{trans('file.Count Stock')}} </button>
+        <button class="btn btn-info" data-toggle="modal" data-target="#createModal"><i class="fa fa-plus"></i>
+            {{trans('file.Count Stock')}} </button>
     </div>
     <div class="table-responsive">
         <table id="stock-count-table" class="table table-striped stock-count-list">
@@ -37,61 +40,71 @@
                 ?>
                 <tr>
                     <td>{{$key}}</td>
-                    <td>{{ date($general_setting->date_format, strtotime($stock_count->created_at->toDateString())) . ' '. $stock_count->created_at->toTimeString() }}</td>
+                    <td>{{ date($general_setting->date_format, strtotime($stock_count->created_at->toDateString())) . '
+                        '. $stock_count->created_at->toTimeString() }}</td>
                     <td>{{ $stock_count->reference_no }}</td>
                     <td>{{ $warehouse->name }}</td>
                     <td>
                         @if($stock_count->category_id)
-                            @foreach(explode(",",$stock_count->category_id) as $cat_key=>$category_id)
-                            @php
-                                $category = \DB::table('categories')->find($category_id);
-                                $category_name[] = $category->name;
-                            @endphp
-                                @if($cat_key)
-                                    {{', ' . $category->name}}
-                                @else
-                                    {{$category->name}}
-                                @endif
-                            @endforeach
+                        @foreach(explode(",",$stock_count->category_id) as $cat_key=>$category_id)
+                        @php
+                        $category = \DB::table('categories')->find($category_id);
+                        $category_name[] = $category->name;
+                        @endphp
+                        @if($cat_key)
+                        {{', ' . $category->name}}
+                        @else
+                        {{$category->name}}
+                        @endif
+                        @endforeach
                         @endif
                     </td>
                     <td>
                         @if($stock_count->brand_id)
-                            @foreach(explode(",",$stock_count->brand_id) as $brand_key=>$brand_id)
-                            @php
-                                $brand = \DB::table('brands')->find($brand_id);
-                                $brand_name[] = $brand->title;
-                            @endphp
-                                @if($brand_key)
-                                    {{', '.$brand->title}}
-                                @else
-                                    {{$brand->title}}
-                                @endif
-                            @endforeach
+                        @foreach(explode(",",$stock_count->brand_id) as $brand_key=>$brand_id)
+                        @php
+                        $brand = \DB::table('brands')->find($brand_id);
+                        $brand_name[] = $brand->title;
+                        @endphp
+                        @if($brand_key)
+                        {{', '.$brand->title}}
+                        @else
+                        {{$brand->title}}
+                        @endif
+                        @endforeach
                         @endif
                     </td>
                     @if($stock_count->type == 'full')
-                        @php $type = trans('file.Full') @endphp
-                        <td><div class="badge badge-primary">{{trans('file.Full')}}</div></td>
+                    @php $type = trans('file.Full') @endphp
+                    <td>
+                        <div class="badge badge-primary">{{trans('file.Full')}}</div>
+                    </td>
                     @else
-                        @php $type = trans('file.Partial') @endphp
-                        <td><div class="badge badge-info">{{trans('file.Partial')}}</div></td>
+                    @php $type = trans('file.Partial') @endphp
+                    <td>
+                        <div class="badge badge-info">{{trans('file.Partial')}}</div>
+                    </td>
                     @endif
                     <td class="text-center">
-                        <a download href="{{'public/stock_count/'.$stock_count->initial_file}}" title="{{trans('file.Download')}}"><i class="fa fa-file"></i></a>
+                        <a download href="{{'public/stock_count/'.$stock_count->initial_file}}"
+                            title="{{trans('file.Download')}}"><i class="fa fa-file"></i></a>
                     </td>
                     <td class="text-center">
                         @if($stock_count->final_file)
-                        <a download href="{{'public/stock_count/'.$stock_count->final_file}}" title="{{trans('file.Download')}}"><i class="fa fa-file"></i></a>
+                        <a download href="{{'public/stock_count/'.$stock_count->final_file}}"
+                            title="{{trans('file.Download')}}"><i class="fa fa-file"></i></a>
                         @endif
                     </td>
                     <td>
                         @if($stock_count->final_file)
-                            <div class="badge badge-success final-report" data-stock_count='["{{date($general_setting->date_format, strtotime($stock_count->created_at->toDateString()))}}", "{{$stock_count->reference_no}}", "{{$warehouse->name}}", "{{$type}}", "{{implode(", ", $category_name)}}", "{{implode(", ", $brand_name)}}", "{{$initial_file}}", "{{$final_file}}", "{{$stock_count->id}}"]'>{{trans('file.Final Report')}}
-                            </div>
+                        <div class="badge badge-success final-report"
+                            data-stock_count='["{{date($general_setting->date_format, strtotime($stock_count->created_at->toDateString()))}}", "{{$stock_count->reference_no}}", "{{$warehouse->name}}", "{{$type}}", "{{implode(", ", $category_name)}}", "{{implode(", ", $brand_name)}}", "{{$initial_file}}", "{{$final_file}}", "{{$stock_count->id}}"]'>
+                            {{trans('file.Final Report')}}
+                        </div>
                         @else
-                            <div class="badge badge-primary finalize" data-id="{{$stock_count->id}}">{{trans('file.Finalize')}}
-                            </div>
+                        <div class="badge badge-primary finalize" data-id="{{$stock_count->id}}">
+                            {{trans('file.Finalize')}}
+                        </div>
                         @endif
                     </td>
                 </tr>
@@ -113,99 +126,113 @@
     </div>
 </section>
 
-<div id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+<div id="createModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
     <div role="document" class="modal-dialog">
-      <div class="modal-content">
-        {!! Form::open(['route' => 'stock-count.store', 'method' => 'post', 'files' => true]) !!}
-        <div class="modal-header">
-          <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Count Stock')}}</h5>
-          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        </div>
-        <div class="modal-body">
-          <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.</small></p>
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label><strong>{{trans('file.Warehouse')}} *</strong></label>
-                    <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
-                        @foreach($lims_warehouse_list as $warehouse)
-                        <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
-                        @endforeach
-                    </select>
+        <div class="modal-content">
+            {!! Form::open(['route' => 'stock-count.store', 'method' => 'post', 'files' => true]) !!}
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Count Stock')}}</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="italic"><small>{{trans('file.The field labels marked with * are required input
+                        fields')}}.</small></p>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label><strong>{{trans('file.Warehouse')}} *</strong></label>
+                        <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control"
+                            data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                            @foreach($lims_warehouse_list as $warehouse)
+                            <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label><strong>{{trans('file.Type')}} *</strong></label>
+                        <select class="form-control" name="type">
+                            <option value="full">{{trans('file.Full')}}</option>
+                            <option value="partial">{{trans('file.Partial')}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group" id="category">
+                        <label><strong>{{trans('file.category')}}</strong></label>
+                        <select name="category_id[]" id="category_id" class="selectpicker form-control"
+                            data-live-search="true" data-live-search-style="begins" title="Select Category..." multiple>
+                            @foreach($lims_category_list as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group" id="brand">
+                        <label><strong>{{trans('file.Brand')}}</strong></label>
+                        <select name="brand_id[]" id="brand_id" class="selectpicker form-control"
+                            data-live-search="true" data-live-search-style="begins" title="Select Brand..." multiple>
+                            @foreach($lims_brand_list as $brand)
+                            <option value="{{$brand->id}}">{{$brand->title}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-6 form-group">
-                    <label><strong>{{trans('file.Type')}} *</strong></label>
-                    <select class="form-control" name="type">
-                        <option value="full">{{trans('file.Full')}}</option>
-                        <option value="partial">{{trans('file.Partial')}}</option>
-                    </select>
-                </div>
-                <div class="col-md-6 form-group" id="category">
-                    <label><strong>{{trans('file.category')}}</strong></label>
-                    <select name="category_id[]" id="category_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Category..." multiple>
-                        @foreach($lims_category_list as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-md-6 form-group" id="brand">
-                    <label><strong>{{trans('file.Brand')}}</strong></label>
-                    <select name="brand_id[]" id="brand_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Brand..." multiple>
-                        @foreach($lims_brand_list as $brand)
-                        <option value="{{$brand->id}}">{{$brand->title}}</option>
-                        @endforeach
-                    </select>
+                <div class="form-group">
+                    <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
                 </div>
             </div>
-            <div class="form-group">       
-              <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
-            </div>
+            {{ Form::close() }}
         </div>
-        {{ Form::close() }}
-      </div>
     </div>
 </div>
 
-<div id="finalizeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-  <div role="document" class="modal-dialog">
-    <div class="modal-content">
-        {{ Form::open(['route' => 'stock-count.finalize', 'method' => 'POST', 'files' => true] ) }}
-      <div class="modal-header">
-        <h5 id="exampleModalLabel" class="modal-title"> {{trans('file.Finalize Stock Count')}}</h5>
-        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-      </div>
-        <div class="modal-body">
-            <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.<strong>{{trans('file.You just need to update the Counted column in the initial file')}}</strong> </small></p>
-            <div class="form-group">
-                <label><strong>{{trans('file.Upload File')}} *</strong></label>
-                <input required type="file" name="final_file" class="form-control" />
+<div id="finalizeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
+    <div role="document" class="modal-dialog">
+        <div class="modal-content">
+            {{ Form::open(['route' => 'stock-count.finalize', 'method' => 'POST', 'files' => true] ) }}
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title"> {{trans('file.Finalize Stock Count')}}</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                        aria-hidden="true">×</span></button>
             </div>
-            <input type="hidden" name="stock_count_id">
-            <div class="form-group">
-                <label><strong>{{trans('file.Note')}}</strong></label>
-                <textarea rows="3" name="note" class="form-control"></textarea>
+            <div class="modal-body">
+                <p class="italic"><small>{{trans('file.The field labels marked with * are required input
+                        fields')}}.<strong>{{trans('file.You just need to update the Counted column in the initial
+                            file')}}</strong> </small></p>
+                <div class="form-group">
+                    <label><strong>{{trans('file.Upload File')}} *</strong></label>
+                    <input required type="file" name="final_file" class="form-control" />
+                </div>
+                <input type="hidden" name="stock_count_id">
+                <div class="form-group">
+                    <label><strong>{{trans('file.Note')}}</strong></label>
+                    <textarea rows="3" name="note" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
+                </div>
             </div>
-            <div class="form-group">       
-                <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
-              </div>
+            {{ Form::close() }}
         </div>
-      {{ Form::close() }}
     </div>
-  </div>
 </div>
 
-<div id="stock-count-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+<div id="stock-count-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
     <div role="document" class="modal-dialog">
         <div class="modal-content">
             <div class="container mt-3 pb-3">
                 <div class="row border-bottom pb-2">
                     <div class="col-md-3">
-                        <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="fa fa-print"></i> {{trans('file.Print')}}</button>
+                        <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i
+                                class="fa fa-print"></i> {{trans('file.Print')}}</button>
                     </div>
                     <div class="col-md-6">
-                        <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">{{$general_setting->site_title}}</h3>
+                        <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">
+                            {{$general_setting->site_title}}</h3>
                     </div>
                     <div class="col-md-3">
-                        <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close d-print-none"><span aria-hidden="true">×</span></button>
+                        <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close"
+                            class="close d-print-none"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="col-md-12 text-center">
                         <i style="font-size: 15px;">{{trans('file.Stock Count')}}</i>
@@ -235,7 +262,6 @@
 
 
 <script type="text/javascript">
-
     $("ul#product").siblings('a').attr('aria-expanded','true');
     $("ul#product").addClass("show");
     $("ul#product #stock-count-menu").addClass("active");
@@ -317,7 +343,7 @@
           var divToPrint=document.getElementById('stock-count-details');
           var newWin=window.open('','Print-Window');
           newWin.document.open();
-          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('public/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
+          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
           newWin.document.close();
           setTimeout(function(){newWin.close();},10);
     });

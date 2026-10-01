@@ -1,92 +1,99 @@
-@extends('layout.main') 
+@extends('layout.main')
 
 @section('css')
 <style>
     .popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.7);
-    z-index: 1;
-}
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+    }
 
-.popup-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    border-radius: 5px;
-    width: 50%;
-    position: relative;
-}
+    .popup-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 5px;
+        width: 50%;
+        position: relative;
+    }
 
-.close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 10px;
-    cursor: pointer;
-}
+    .close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+        cursor: pointer;
+    }
 
-.inputField{
-    display: flex;
-    padding: 25px;
-    justify-content: space-arround;
-}
+    .inputField {
+        display: flex;
+        padding: 25px;
+        justify-content: space-arround;
+    }
 
-.destroy_field input{
-    margin:10px;
-    width: 36%;
-}
+    .destroy_field input {
+        margin: 10px;
+        width: 36%;
+    }
 
-.destroy_field{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    .destroy_field {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-.destroy-btn{
-    padding: 8px;
-    background-color: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
-}
+    .destroy-btn {
+        padding: 8px;
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+    }
 
-.inputs{
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
+    .inputs {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
 </style>
 @endsection
 
 @section('content')
 @if(session()->has('create_message'))
-    <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('create_message') }}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('create_message') }}</div>
 @endif
 @if(session()->has('edit_message'))
-    <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('edit_message') }}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('edit_message') }}</div>
 @endif
 @if(session()->has('import_message'))
-    <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('import_message') }}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('import_message') }}</div>
 @endif
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 @if(session()->has('message'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div>
 @endif
 
 <section>
     <div class="container-fluid">
         @if(in_array("products-add", $all_permission))
-            {{-- <a href="{{route('products.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {{__('file.add_product')}}</a> --}}
-            {{-- <a href="#" data-toggle="modal" data-target="#importProduct" class="btn btn-primary"><i class="fa fa-file"></i> {{__('file.import_product')}}</a> --}}
+        {{-- <a href="{{route('products.create')}}" class="btn btn-info"><i class="fa fa-plus"></i>
+            {{__('file.add_product')}}</a> --}}
+        {{-- <a href="#" data-toggle="modal" data-target="#importProduct" class="btn btn-primary"><i
+                class="fa fa-file"></i> {{__('file.import_product')}}</a> --}}
         @endif
     </div>
     <div class="table-responsive">
@@ -105,22 +112,26 @@
                 @forelse($damaged_products as $damaged)
                 <tr>
                     <td>{{ $damaged->id }}</td>
-                    <td><img src="{{ url('public/images/product/'. $damaged->product->image) ?? "" }}" height="80" width="80"></td>
+                    <td><img src="{{ url('public/images/product/'. $damaged->product->image) ?? "" }}" height="80"
+                            width="80"></td>
                     <td>{{ $damaged->product->name }}</td>
                     <td>{{ $damaged->damaged_qty }}</td>
                     <td>{{ $damaged->created_at->format('Y/m/d h:i a') }}</td>
                     <td>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> {{ trans("file.action") }}
-                              <span class="caret"></span>
-                              <span class="sr-only">Toggle Dropdown</span>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false"> {{ trans("file.action") }}
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">
                                 <!--{{ Form::open(["route" => ["products-damaged.restore", $damaged->id], "method" => "GET"] ) }}-->
-                                    <li>
-                                      <button type="submit" class="btn btn-link" onclick="return restorePrompt({{$damaged->id}})"><i class="fa fa-plus"></i> {{ trans("file.restore") }} </button> 
-                                    </li>
-                                    <!--{{ Form::close() }}-->
+                                <li>
+                                    <button type="submit" class="btn btn-link"
+                                        onclick="return restorePrompt({{$damaged->id}})"><i class="fa fa-plus"></i> {{
+                                        trans("file.restore") }} </button>
+                                </li>
+                                <!--{{ Form::close() }}-->
                                 <!--@if(in_array("products-delete", $all_permission))-->
                                 <!--    {{ Form::open(["route" => ["products.destroy", $damaged->id], "method" => "DELETE"] ) }}-->
                                 <!--    <li>-->
@@ -129,92 +140,101 @@
                                 <!--    {{ Form::close() }}-->
                                 <!--    @endif-->
                             </ul>
-                        </div> 
+                        </div>
                     </td>
                 </tr>
                 @empty
-                    {{ __('No Data') }}
+                {{ __('No Data') }}
                 @endforelse
             </tbody>
-            
+
         </table>
     </div>
 </section>
 
-<div id="importProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+<div id="importProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
     <div role="document" class="modal-dialog">
-      <div class="modal-content">
-        {!! Form::open(['route' => 'product.import', 'method' => 'post', 'files' => true]) !!}
-        <div class="modal-header">
-          <h5 id="exampleModalLabel" class="modal-title">Import Product</h5>
-          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        </div>
-        <div class="modal-body">
-          <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.</small></p>
-           <p>{{trans('file.The correct column order is')}} (image, name*, code*, type*, brand, category*, unit_code*, cost*, price*, product_details) {{trans('file.and you must follow this')}}.</p>
-           <p>{{trans('file.To display Image it must be stored in')}} public/images/product {{trans('file.directory')}}. {{trans('file.Image name must be same as product name')}}</p>
-           <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label><strong>{{trans('file.Upload CSV File')}} *</strong></label>
-                        {{Form::file('file', array('class' => 'form-control','required'))}}
+        <div class="modal-content">
+            {!! Form::open(['route' => 'product.import', 'method' => 'post', 'files' => true]) !!}
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">Import Product</h5>
+                <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p class="italic"><small>{{trans('file.The field labels marked with * are required input
+                        fields')}}.</small></p>
+                <p>{{trans('file.The correct column order is')}} (image, name*, code*, type*, brand, category*,
+                    unit_code*, cost*, price*, product_details) {{trans('file.and you must follow this')}}.</p>
+                <p>{{trans('file.To display Image it must be stored in')}} public/images/product
+                    {{trans('file.directory')}}. {{trans('file.Image name must be same as product name')}}</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>{{trans('file.Upload CSV File')}} *</strong></label>
+                            {{Form::file('file', array('class' => 'form-control','required'))}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong> {{trans('file.Sample File')}}</strong></label>
+                            <a href="public/sample_file/sample_products.csv" class="btn btn-info btn-block btn-md"><i
+                                    class="fa fa-download"></i> {{trans('file.Download')}}</a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label><strong> {{trans('file.Sample File')}}</strong></label>
-                        <a href="public/sample_file/sample_products.csv" class="btn btn-info btn-block btn-md"><i class="fa fa-download"></i>  {{trans('file.Download')}}</a>
-                    </div>
-                </div>
-           </div>           
-            {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+                {{Form::submit('Submit', ['class' => 'btn btn-primary'])}}
+            </div>
+            {!! Form::close() !!}
         </div>
-        {!! Form::close() !!}
-      </div>
     </div>
 </div>
 
-<div id="product-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+<div id="product-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
     <div role="document" class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="exampleModalLabel" class="modal-title">{{trans('Product Details')}}</h5>
-          <button id="print-btn" type="button" class="btn btn-default btn-sm ml-3"><i class="fa fa-print"></i> {{trans('file.Print')}}</button>
-          <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-md-5" id="slider-content"></div>
-                <div class="col-md-5 offset-1" id="product-content"></div>
-                <div class="col-md-5 mt-2" id="product-warehouse-section">
-                    <h5>{{trans('file.Warehouse Quantity')}}</h5>
-                    <table class="table table-bordered table-hover product-warehouse-list">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 id="exampleModalLabel" class="modal-title">{{trans('Product Details')}}</h5>
+                <button id="print-btn" type="button" class="btn btn-default btn-sm ml-3"><i class="fa fa-print"></i>
+                    {{trans('file.Print')}}</button>
+                <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-5" id="slider-content"></div>
+                    <div class="col-md-5 offset-1" id="product-content"></div>
+                    <div class="col-md-5 mt-2" id="product-warehouse-section">
+                        <h5>{{trans('file.Warehouse Quantity')}}</h5>
+                        <table class="table table-bordered table-hover product-warehouse-list">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-7 mt-2" id="product-variant-warehouse-section">
+                        <h5>{{trans('file.Warehouse quantity of product variants')}}</h5>
+                        <table class="table table-bordered table-hover product-variant-warehouse-list">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h5 id="combo-header"></h5>
+                <table class="table table-bordered table-hover item-list">
                     <thead>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
-                </div>
-                <div class="col-md-7 mt-2" id="product-variant-warehouse-section">
-                    <h5>{{trans('file.Warehouse quantity of product variants')}}</h5>
-                    <table class="table table-bordered table-hover product-variant-warehouse-list">
-                        <thead>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
             </div>
-                
-            <h5 id="combo-header"></h5>
-            <table class="table table-bordered table-hover item-list">
-                <thead>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
         </div>
-      </div>
     </div>
 </div>
 
@@ -237,7 +257,6 @@
 @endsection
 @section('scripts')
 <script>
-
     $("ul#product").siblings('a').attr('aria-expanded','true');
     $("ul#product").addClass("show");
     $("ul#product #product-list-menu").addClass("active");
@@ -309,7 +328,7 @@
           var divToPrint=document.getElementById('product-details');
           var newWin=window.open('','Print-Window');
           newWin.document.open();
-          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('public/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
+          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
           newWin.document.close();
           setTimeout(function(){newWin.close();},10);
     });

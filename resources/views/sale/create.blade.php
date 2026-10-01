@@ -1,6 +1,7 @@
 @extends('layout.main') @section('content')
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 <section class="forms">
     <div class="container-fluid">
@@ -11,25 +12,31 @@
                         <h4>{{trans('file.Add Sale')}}</h4>
                     </div>
                     <div class="card-body">
-                        <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.</small></p>
-                        {!! Form::open(['route' => 'sales.store', 'method' => 'post', 'files' => true, 'class' => 'payment-form']) !!}
+                        <p class="italic"><small>{{trans('file.The field labels marked with * are required input
+                                fields')}}.</small></p>
+                        {!! Form::open(['route' => 'sales.store', 'method' => 'post', 'files' => true, 'class' =>
+                        'payment-form']) !!}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
                                     {{-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label><strong>{{trans('file.Reference No')}} *</strong></label>
-                                            <input type="text" name="reference_no" id="reference_no" placeholder="Please enter the reference no..." class="form-control" />
+                                            <input type="text" name="reference_no" id="reference_no"
+                                                placeholder="Please enter the reference no..." class="form-control" />
                                         </div>
                                     </div> --}}
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label><strong>{{trans('file.customer')}} *</strong></label>
-                                            <select name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select customer...">
+                                            <select name="customer_id" id="customer_id"
+                                                class="selectpicker form-control" data-live-search="true"
+                                                data-live-search-style="begins" title="Select customer...">
                                                 <?php $deposit = []; ?>
                                                 @foreach($lims_customer_list as $customer)
                                                 <?php $deposit[$customer->id] = $customer->deposit - $customer->expense; ?>
-                                                <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
+                                                <option value="{{$customer->id}}">{{$customer->name . ' (' .
+                                                    $customer->phone_number . ')'}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -37,7 +44,9 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label><strong>{{trans('file.Warehouse')}} *</strong></label>
-                                            <select required name="warehouse_id" id="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                            <select required name="warehouse_id" id="warehouse_id"
+                                                class="selectpicker form-control" data-live-search="true"
+                                                data-live-search-style="begins" title="Select warehouse...">
                                                 @foreach($lims_warehouse_list as $warehouse)
                                                 <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                                 @endforeach
@@ -47,9 +56,12 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label><strong>{{trans('file.Biller')}} *</strong></label>
-                                            <select required name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
+                                            <select required name="biller_id" class="selectpicker form-control"
+                                                data-live-search="true" data-live-search-style="begins"
+                                                title="Select Biller...">
                                                 @foreach($lims_biller_list as $biller)
-                                                <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
+                                                <option value="{{$biller->id}}">{{$biller->name . ' (' .
+                                                    $biller->company_name . ')'}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -59,8 +71,11 @@
                                     <div class="col-md-12">
                                         <label><strong>{{trans('file.Select Product')}}</strong></label>
                                         <div class="search-box input-group">
-                                            <button type="button" class="btn btn-secondary btn-lg"><i class="fa fa-barcode"></i></button>
-                                            <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="Please type product code and select..." class="form-control" />
+                                            <button type="button" class="btn btn-secondary btn-lg"><i
+                                                    class="fa fa-barcode"></i></button>
+                                            <input type="text" name="product_code_name" id="lims_productcodeSearch"
+                                                placeholder="Please type product code and select..."
+                                                class="form-control" />
                                         </div>
                                     </div>
                                 </div>
@@ -148,7 +163,8 @@
                                             <label>
                                                 <strong>{{trans('file.Order Discount')}}</strong>
                                             </label>
-                                            <input type="number" name="order_discount" class="form-control" step="any"/>
+                                            <input type="number" name="order_discount" class="form-control"
+                                                step="any" />
                                         </div>
                                     </div>
                                     {{-- <div class="col-md-4">
@@ -156,7 +172,7 @@
                                             <label>
                                                 <strong>{{trans('file.Shipping Cost')}}</strong>
                                             </label>
-                                            <input type="number" name="shipping_cost" class="form-control" step="any"/>
+                                            <input type="number" name="shipping_cost" class="form-control" step="any" />
                                         </div>
                                     </div> --}}
                                     {{-- <div class="col-md-4">
@@ -164,7 +180,8 @@
                                             <label>
                                                 <strong>{{trans('file.Cost Delevery')}}</strong>
                                             </label>
-                                            <input type="number" name="cost_delevery" class="form-control" step="any" value="0"/>
+                                            <input type="number" name="cost_delevery" class="form-control" step="any"
+                                                value="0" />
                                         </div>
                                     </div> --}}
                                     <div class="col-md-4">
@@ -172,26 +189,30 @@
                                             <label>
                                                 <strong>{{trans('file.Date')}}</strong>
                                             </label>
-                                            <input type="date" name="created_at" class="form-control" value="{{ now()->format('Y-m-d') }}"/>
+                                            <input type="date" name="created_at" class="form-control"
+                                                value="{{ now()->format('Y-m-d') }}" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label><strong>{{trans('file.Attach Document')}}</strong></label> <i class="fa fa-question-circle" data-toggle="tooltip" title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
+                                            <label><strong>{{trans('file.Attach Document')}}</strong></label> <i
+                                                class="fa fa-question-circle" data-toggle="tooltip"
+                                                title="Only jpg, jpeg, png, gif, pdf, csv, docx, xlsx and txt file is supported"></i>
                                             <input type="file" name="document" class="form-control" />
                                             @if($errors->has('extension'))
-                                                <span>
-                                                   <strong>{{ $errors->first('extension') }}</strong>
-                                                </span>
+                                            <span>
+                                                <strong>{{ $errors->first('extension') }}</strong>
+                                            </span>
                                             @endif
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             {{-- <label><strong>{{trans('file.Sale Status')}} *</strong></label> --}}
-                                            <select name="sale_status" id="sale_status" class="form-control" style="display: none">
+                                            <select name="sale_status" id="sale_status" class="form-control"
+                                                style="display: none">
                                                 <option value="1">{{trans('file.Completed')}}</option>
                                                 <option value="2">{{trans('file.Pending')}}</option>
                                                 <option value="3">Free</option>
@@ -229,13 +250,15 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label><strong>{{trans('file.Recieved Amount')}} *</strong></label>
-                                                <input type="number" name="paying_amount" class="form-control" id="paying-amount" step="any" />
+                                                <input type="number" name="paying_amount" class="form-control"
+                                                    id="paying-amount" step="any" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label><strong>{{trans('file.Paying Amount')}} *</strong></label>
-                                                <input type="number" name="paid_amount" class="form-control" id="paid-amount" step="any"/>
+                                                <input type="number" name="paid_amount" class="form-control"
+                                                    id="paid-amount" step="any" />
                                             </div>
                                         </div>
                                         <div class="col-md-3">
@@ -258,7 +281,10 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label><strong> {{trans('file.Gift Card')}} *</strong></label>
-                                                <select id="gift_card_id" name="gift_card_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card..."></select>
+                                                <select id="gift_card_id" name="gift_card_id"
+                                                    class="selectpicker form-control" data-live-search="true"
+                                                    data-live-search-style="begins"
+                                                    title="Select Gift Card..."></select>
                                             </div>
                                         </div>
                                     </div>
@@ -292,7 +318,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary" id="submit-button">
+                                    <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary"
+                                        id="submit-button">
                                 </div>
                             </div>
                         </div>
@@ -324,12 +351,14 @@
             </td>
         </table>
     </div>
-    <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+    <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        class="modal fade text-left">
         <div role="document" class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 id="modal_header" class="modal-title"></h5>
-                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                            aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -353,20 +382,21 @@
                     $tax_rate_all[] = $tax->rate;
                 }
             ?>
-                            <div class="form-group">
-                                <label><strong>{{trans('file.Tax Rate')}}</strong></label>
-                                <select name="edit_tax_rate" class="form-control">
-                                    @foreach($tax_name_all as $key => $name)
-                                    <option value="{{$key}}">{{$name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div id="edit_unit" class="form-group">
-                                <label><strong>{{trans('file.Product Unit')}}</strong></label>
-                                <select name="edit_unit" class="form-control">
-                                </select>
-                            </div>
-                            <button type="button" name="update_btn" class="btn btn-primary">{{trans('file.update')}}</button>
+                        <div class="form-group">
+                            <label><strong>{{trans('file.Tax Rate')}}</strong></label>
+                            <select name="edit_tax_rate" class="form-control">
+                                @foreach($tax_name_all as $key => $name)
+                                <option value="{{$key}}">{{$name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div id="edit_unit" class="form-group">
+                            <label><strong>{{trans('file.Product Unit')}}</strong></label>
+                            <select name="edit_unit" class="form-control">
+                            </select>
+                        </div>
+                        <button type="button" name="update_btn"
+                            class="btn btn-primary">{{trans('file.update')}}</button>
                     </form>
                 </div>
             </div>
@@ -374,7 +404,6 @@
     </div>
 </section>
 <script type="text/javascript">
-
     $("ul#sale").siblings('a').attr('aria-expanded','true');
     $("ul#sale").addClass("show");
     $("ul#sale #sale-create-menu").addClass("active");
@@ -949,7 +978,7 @@ $('select[name="paid_by_id"]').on("change", function() {
         $('select[name="gift_card_id"]').attr('required', true);
     }
     else if (id == 3) {
-        $.getScript( "../public/vendor/stripe/checkout.js" );
+        $.getScript( "../vendor/stripe/checkout.js" );
         $(".card-element").show();
         $("#gift-card").hide();
         $("#cheque").hide();

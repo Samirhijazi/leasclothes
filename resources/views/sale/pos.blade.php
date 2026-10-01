@@ -1,56 +1,63 @@
 @section('css')
 <style>
-     .ddddd {
-         flex-direction: row !important;
-    }   
-@media(max-width:600px){
-     .ddddd {
-         flex-direction: column !important;
-
-    }   
-    .ffg{
-
+    .ddddd {
+        flex-direction: row !important;
     }
-}
+
+    @media(max-width:600px) {
+        .ddddd {
+            flex-direction: column !important;
+
+        }
+
+        .ffg {}
+    }
 </style>
 @endsection
 
 @extends('layout.top-head') @section('content')
 @if($errors->has('phone_number'))
 <div class="alert alert-danger alert-dismissible text-center">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ $errors->first('phone_number') }}</div>
-@endif 
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>{{ $errors->first('phone_number') }}
+</div>
+@endif
 @if(session()->has('message'))
-    <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{!! session()->get('message') !!}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{!! session()->get('message') !!}</div>
 @endif
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 
 <section class="forms pos-section">
     <div class=" ddddd d-flex  flex-column flex-md-row" style="">
         <audio id="mysoundclip1" preload="auto">
-            <source src="{{url('public/beep/beep-timber.mp3')}}"></source>
+            <source src="{{url('public/beep/beep-timber.mp3')}}">
+            </source>
         </audio>
         <audio id="mysoundclip2" preload="auto">
-            <source src="{{url('public/beep/beep-07.mp3')}}"></source>
+            <source src="{{url('public/beep/beep-07.mp3')}}">
+            </source>
         </audio>
         <div class="ffg" style=' width: -webkit-fill-available !important;
         padding: 0px 12px !important;'>
             <div class="card">
                 <div class="card-body">
-                    {!! Form::open(['route' => 'sales.store', 'method' => 'post', 'files' => true, 'class' => 'payment-form']) !!}
+                    {!! Form::open(['route' => 'sales.store', 'method' => 'post', 'files' => true, 'class' =>
+                    'payment-form']) !!}
                     @php
-                        if($lims_pos_setting_data)
-                            $keybord_active = $lims_pos_setting_data->keybord_active;
-                        else
-                            $keybord_active = 0;
+                    if($lims_pos_setting_data)
+                    $keybord_active = $lims_pos_setting_data->keybord_active;
+                    else
+                    $keybord_active = 0;
 
-                        $customer_active = DB::table('permissions')
-                          ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
-                          ->where([
-                            ['permissions.name', 'customers-add'],
-                            ['role_id', \Auth::user()->role_id] ])->first();
+                    $customer_active = DB::table('permissions')
+                    ->join('role_has_permissions', 'permissions.id', '=', 'role_has_permissions.permission_id')
+                    ->where([
+                    ['permissions.name', 'customers-add'],
+                    ['role_id', \Auth::user()->role_id] ])->first();
                     @endphp
                     <div class="row ">
                         <div class="col-md-12">
@@ -58,9 +65,12 @@
                                 <div class="col-md-6" style="display: none">
                                     <div class="form-group">
                                         @if($lims_pos_setting_data)
-                                        <input type="hidden" name="warehouse_id_hidden" value="{{$lims_pos_setting_data->warehouse_id}}">
+                                        <input type="hidden" name="warehouse_id_hidden"
+                                            value="{{$lims_pos_setting_data->warehouse_id}}">
                                         @endif
-                                        <select required id="warehouse_id" name="warehouse_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select warehouse...">
+                                        <select required id="warehouse_id" name="warehouse_id"
+                                            class="selectpicker form-control" data-live-search="true"
+                                            data-live-search-style="begins" title="Select warehouse...">
                                             @foreach($lims_warehouse_list as $warehouse)
                                             <option value="{{$warehouse->id}}">{{$warehouse->name}}</option>
                                             @endforeach
@@ -70,37 +80,51 @@
                                 <div class="col-md-6" style="display: none">
                                     <div class="form-group">
                                         @if($lims_pos_setting_data)
-                                        <input type="hidden" name="biller_id_hidden" value="{{$lims_pos_setting_data->biller_id}}">
+                                        <input type="hidden" name="biller_id_hidden"
+                                            value="{{$lims_pos_setting_data->biller_id}}">
                                         @endif
-                                        <select required id="biller_id" name="biller_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Biller...">
-                                        @foreach($lims_biller_list as $biller)
-                                        <option value="{{$biller->id}}">{{$biller->name . ' (' . $biller->company_name . ')'}}</option>
-                                        @endforeach
+                                        <select required id="biller_id" name="biller_id"
+                                            class="selectpicker form-control" data-live-search="true"
+                                            data-live-search-style="begins" title="Select Biller...">
+                                            @foreach($lims_biller_list as $biller)
+                                            <option value="{{$biller->id}}">{{$biller->name . ' (' .
+                                                $biller->company_name . ')'}}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         @if($lims_pos_setting_data)
-                                        <input type="hidden" name="customer_id_hidden" value="{{$lims_pos_setting_data->customer_id}}">
+                                        <input type="hidden" name="customer_id_hidden"
+                                            value="{{$lims_pos_setting_data->customer_id}}">
                                         @endif
                                         <div class="input-group pos">
                                             @if($customer_active)
-                                            <select name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select customer...">
-                                            <?php $deposit = [] ?>
-                                            @foreach($lims_customer_list as $customer)
-                                                @php $deposit[$customer->id] = $customer->deposit - $customer->expense; @endphp
-                                                <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
-                                            @endforeach
+                                            <select name="customer_id" id="customer_id"
+                                                class="selectpicker form-control" data-live-search="true"
+                                                data-live-search-style="begins" title="Select customer...">
+                                                <?php $deposit = [] ?>
+                                                @foreach($lims_customer_list as $customer)
+                                                @php $deposit[$customer->id] = $customer->deposit - $customer->expense;
+                                                @endphp
+                                                <option value="{{$customer->id}}">{{$customer->name . ' (' .
+                                                    $customer->phone_number . ')'}}</option>
+                                                @endforeach
                                             </select>
-                                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addCustomer"><i class="fa fa-plus"></i></button>
+                                            <button type="button" class="btn btn-default" data-toggle="modal"
+                                                data-target="#addCustomer"><i class="fa fa-plus"></i></button>
                                             @else
                                             <?php $deposit = [] ?>
-                                            <select required name="customer_id" id="customer_id" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select customer...">
-                                            @foreach($lims_customer_list as $customer)
-                                                @php $deposit[$customer->id] = $customer->deposit - $customer->expense; @endphp
-                                                <option value="{{$customer->id}}">{{$customer->name . ' (' . $customer->phone_number . ')'}}</option>
-                                            @endforeach
+                                            <select required name="customer_id" id="customer_id"
+                                                class="selectpicker form-control" data-live-search="true"
+                                                data-live-search-style="begins" title="Select customer...">
+                                                @foreach($lims_customer_list as $customer)
+                                                @php $deposit[$customer->id] = $customer->deposit - $customer->expense;
+                                                @endphp
+                                                <option value="{{$customer->id}}">{{$customer->name . ' (' .
+                                                    $customer->phone_number . ')'}}</option>
+                                                @endforeach
                                             </select>
                                             @endif
                                         </div>
@@ -108,7 +132,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="search-box form-group">
-                                        <input type="text" name="product_code_name" id="lims_productcodeSearch" placeholder="Scan/Search product by name/code" class="form-control" autofocus />
+                                        <input type="text" name="product_code_name" id="lims_productcodeSearch"
+                                            placeholder="Scan/Search product by name/code" class="form-control"
+                                            autofocus />
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +170,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <input type="hidden" name="total_tax" value="0.00"/>
+                                        <input type="hidden" name="total_tax" value="0.00" />
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -175,105 +201,140 @@
                             <div class="form-group">
                                 <table class="table table-bordered table-condensed totals">
                                     <tr>
-                                        <td style="width:10%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Items')}}</strong><br>
-                                        <span id="item">0</span>
+                                        <td style="width:10%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Items')}}</strong><br>
+                                            <span id="item">0</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Total')}}</strong><br>
-                                        <span id="subtotal">0.00</span>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Total')}}</strong><br>
+                                            <span id="subtotal">0.00</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Discount')}}</strong>
-                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#order-discount"> <i class="fa fa-edit"></i></button><br>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Discount')}}</strong>
+                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal"
+                                                data-target="#order-discount"> <i class="fa fa-edit"></i></button><br>
                                             <span id="discount">0.00</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Coupon')}}</strong>
-                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#coupon-modal"><i class="fa fa-edit"></i></button><br>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Coupon')}}</strong>
+                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal"
+                                                data-target="#coupon-modal"><i class="fa fa-edit"></i></button><br>
                                             <span id="coupon-text">0.00</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Tax')}}</strong>
-                                        <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#order-tax"><i class="fa fa-edit"></i></button><br>
-                                        <span id="tax">0.00</span>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Tax')}}</strong>
+                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal"
+                                                data-target="#order-tax"><i class="fa fa-edit"></i></button><br>
+                                            <span id="tax">0.00</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.Shipping')}}</strong>
-                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#shipping-cost-modal"><i class="fa fa-edit"></i></button><br>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.Shipping')}}</strong>
+                                            <button type="button" class="btn btn-link btn-sm" data-toggle="modal"
+                                                data-target="#shipping-cost-modal"><i
+                                                    class="fa fa-edit"></i></button><br>
                                             <span id="shipping-cost">0.00</span>
                                         </td>
-                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;"><strong>{{trans('file.grand total')}}</strong><br>
-                                        <span id="grand-total">0.00</span>
+                                        <td style="width:15%; padding: 0 0 0 10px; color: #000;">
+                                            <strong>{{trans('file.grand total')}}</strong><br>
+                                            <span id="grand-total">0.00</span>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
-                            
+
                             {{-- <div class="column-5">
-                                <button style="background: #0066cc" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="credit-card-btn"><i class="fa fa-credit-card"></i> Card</button>   
+                                <button style="background: #0066cc" type="button" class="btn btn-custom payment-btn"
+                                    data-toggle="modal" data-target="#add-payment" id="credit-card-btn"><i
+                                        class="fa fa-credit-card"></i> Card</button>
                             </div> --}}
                             <div class="">
                             </div>
                             {{-- <div class="column-5">
-                                <button style="background-color: #6666ff" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="paypal-btn"><i class="fa fa-paypal"></i> Paypal</button>
+                                <button style="background-color: #6666ff" type="button"
+                                    class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
+                                    id="paypal-btn"><i class="fa fa-paypal"></i> Paypal</button>
                             </div>
                             <div class="column-5">
-                                <button style="background-color: #e28d02" type="button" class="btn btn-custom" id="draft-btn"><i class="ion-android-drafts"></i> Draft</button>
+                                <button style="background-color: #e28d02" type="button" class="btn btn-custom"
+                                    id="draft-btn"><i class="ion-android-drafts"></i> Draft</button>
                             </div>
                             <div class="column-5">
-                                <button style="background-color: #163951" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="cheque-btn"><i class="ion-cash"></i> Cheque</button>
+                                <button style="background-color: #163951" type="button"
+                                    class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
+                                    id="cheque-btn"><i class="ion-cash"></i> Cheque</button>
                             </div>
                             <div class="column-5">
-                                <button style="background-color: #800080" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="gift-card-btn"><i class="ion-card"></i> GiftCard</button>
+                                <button style="background-color: #800080" type="button"
+                                    class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
+                                    id="gift-card-btn"><i class="ion-card"></i> GiftCard</button>
                             </div>
                             <div class="column-5">
-                                <button style="background-color: #7f4f01" type="button" class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment" id="deposit-btn"><i class="fa fa-university"></i> Deposit</button>
+                                <button style="background-color: #7f4f01" type="button"
+                                    class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
+                                    id="deposit-btn"><i class="fa fa-university"></i> Deposit</button>
                             </div> --}}
                             <div class=" d-flex flex-column flex-md-row ">
-                                 <button style="background: #47d147" type="button" class="btn btn-custom payment-btn mb-2 mb-md-0 mr-md-2" data-toggle="modal" data-target="#add-payment" id="cash-btn"><i class="fa fa-money"></i> Cash</button>
-                                <button style="background-color: #cc0000;" type="button" class="btn btn-custom" id="cancel-btn" onclick="return confirmCancel()"><i class="ion-android-cancel"></i> Cancel</button>
+                                <button style="background: #47d147" type="button"
+                                    class="btn btn-custom payment-btn mb-2 mb-md-0 mr-md-2" data-toggle="modal"
+                                    data-target="#add-payment" id="cash-btn"><i class="fa fa-money"></i> Cash</button>
+                                <button style="background-color: #cc0000;" type="button" class="btn btn-custom"
+                                    id="cancel-btn" onclick="return confirmCancel()"><i class="ion-android-cancel"></i>
+                                    Cancel</button>
                             </div>
                         </div>
-                    </div>                        
+                    </div>
                 </div>
             </div>
         </div>
         <!-- order_discount modal -->
-        <div id="order-discount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="order-discount" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{trans('file.Order Discount')}}</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <input type="text" name="order_discount" class="form-control numkey">
                         </div>
-                        <button type="button" name="order_discount_btn" class="btn btn-primary" data-dismiss="modal">{{trans('file.submit')}}</button>
+                        <button type="button" name="order_discount_btn" class="btn btn-primary"
+                            data-dismiss="modal">{{trans('file.submit')}}</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- coupon modal -->
-        <div id="coupon-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="coupon-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{trans('file.Coupon Code')}}</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <input type="text" id="coupon-code" class="form-control" placeholder="Type Coupon Code...">
                         </div>
-                        <button type="button" class="btn btn-primary coupon-check" data-dismiss="modal">{{trans('file.submit')}}</button>
+                        <button type="button" class="btn btn-primary coupon-check"
+                            data-dismiss="modal">{{trans('file.submit')}}</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- order_tax modal -->
-        <div id="order-tax" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="order-tax" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{trans('file.Order Tax')}}</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
@@ -284,35 +345,41 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="button" name="order_tax_btn" class="btn btn-primary" data-dismiss="modal">{{trans('file.submit')}}</button>
+                        <button type="button" name="order_tax_btn" class="btn btn-primary"
+                            data-dismiss="modal">{{trans('file.submit')}}</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- shipping_cost modal -->
-        <div id="shipping-cost-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="shipping-cost-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">{{trans('file.Shipping Cost')}}</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
                             <input type="text" name="shipping_cost" class="form-control numkey" step="any">
                         </div>
-                        <button type="button" name="shipping_cost_btn" class="btn btn-primary" data-dismiss="modal">{{trans('file.submit')}}</button>
+                        <button type="button" name="shipping_cost_btn" class="btn btn-primary"
+                            data-dismiss="modal">{{trans('file.submit')}}</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- payment modal -->
-        <div id="add-payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="add-payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Finalize Sale')}}</h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -320,11 +387,12 @@
                                 <div class="row">
                                     <div class="col-md-6 mt-1">
                                         <label><strong>{{trans('file.Recieved Amount')}} *</strong></label>
-                                        <input type="text" name="paying_amount" class="form-control numkey" required step="any">
+                                        <input type="text" name="paying_amount" class="form-control numkey" required
+                                            step="any">
                                     </div>
                                     <div class="col-md-6 mt-1">
                                         <label><strong>{{trans('file.Paying Amount')}} *</strong></label>
-                                        <input type="text" name="paid_amount" class="form-control numkey"  step="any">
+                                        <input type="text" name="paid_amount" class="form-control numkey" step="any">
                                     </div>
                                     <div class="col-md-6 mt-1">
                                         <label><strong>{{trans('file.Change')}} : </strong></label>
@@ -338,7 +406,9 @@
                                     <div class="form-group col-md-12 gift-card">
                                         <label><strong> {{trans('file.Gift Card')}} *</strong></label>
                                         <input type="hidden" name="gift_card_id">
-                                        <select id="gift_card_id_select" name="gift_card_id_select" class="selectpicker form-control" data-live-search="true" data-live-search-style="begins" title="Select Gift Card..."></select>
+                                        <select id="gift_card_id_select" name="gift_card_id_select"
+                                            class="selectpicker form-control" data-live-search="true"
+                                            data-live-search-style="begins" title="Select Gift Card..."></select>
                                     </div>
                                     <div class="form-group col-md-12 cheque">
                                         <label><strong>{{trans('file.Cheque Number')}} *</strong></label>
@@ -346,11 +416,12 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label><strong>{{trans('file.Payment Note')}}</strong></label>
-                                        <textarea id="payment_note" rows="2" class="form-control" name="payment_note"></textarea>
+                                        <textarea id="payment_note" rows="2" class="form-control"
+                                            name="payment_note"></textarea>
                                     </div>
                                 </div>
                                 <div class="row">
-                                   <div class="col-md-6 form-group">
+                                    <div class="col-md-6 form-group">
                                         <label><strong>{{trans('file.Sale Note')}}</strong></label>
                                         <textarea rows="3" class="form-control" name="sale_note"></textarea>
                                     </div>
@@ -360,7 +431,8 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <button id="submit-btn" type="submit" class="btn btn-primary">{{trans('file.submit')}}</button>
+                                    <button id="submit-btn" type="submit"
+                                        class="btn btn-primary">{{trans('file.submit')}}</button>
                                 </div>
                             </div>
                         </div>
@@ -376,7 +448,7 @@
                     <div class="row ml-2">
                         @foreach($lims_category_list as $category)
                         <div class="col-md-3 category-img " data-category="{{$category->id}}">
-                            <img  src="{{url('public/images/product/zummXD2dvAtI.png')}}" />
+                            <img src="{{url('public/images/product/zummXD2dvAtI.png')}}" />
                             <p class="text-center">{{$category->name}}</p>
                         </div>
                         @endforeach
@@ -386,31 +458,33 @@
                     <div class="row ml-2">
                         @foreach($lims_brand_list as $brand)
                         @if($brand->image)
-                            <div class="col-md-3 brand-img" data-brand="{{$brand->id}}">
-                                <img  src="{{url('public/images/brand',$brand->image)}}" />
-                                <p class="text-center">{{$brand->title}}</p>
-                            </div>
+                        <div class="col-md-3 brand-img" data-brand="{{$brand->id}}">
+                            <img src="{{url('public/images/brand',$brand->image)}}" />
+                            <p class="text-center">{{$brand->title}}</p>
+                        </div>
                         @else
-                            <div class="col-md-3 brand-img" data-brand="{{$brand->id}}">
-                                <img  src="{{url('public/images/product/zummXD2dvAtI.png')}}" />
-                                <p class="text-center">{{$brand->title}}</p>
-                            </div>
+                        <div class="col-md-3 brand-img" data-brand="{{$brand->id}}">
+                            <img src="{{url('public/images/product/zummXD2dvAtI.png')}}" />
+                            <p class="text-center">{{$brand->title}}</p>
+                        </div>
                         @endif
                         @endforeach
                     </div>
                 </div>
             </div>
-        	<div class="card mb-3">
-        		<div class="card-body">
-        			<div class="row">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
                         <div class="">
-                            <button class="btn btn-block btn-primary" id="category-filter">{{trans('file.category')}}</button>
+                            <button class="btn btn-block btn-primary"
+                                id="category-filter">{{trans('file.category')}}</button>
                         </div>
                         {{-- <div class="col-md-4">
                             <button class="btn btn-block btn-info" id="brand-filter">{{trans('file.Brand')}}</button>
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-block btn-danger" id="featured-filter">{{trans('file.Featured')}}</button>
+                            <button class="btn btn-block btn-danger"
+                                id="featured-filter">{{trans('file.Featured')}}</button>
                         </div> --}}
                         <div class="col-md-12 mt-1 table-container">
                             <table id="product-table" class="table product-list">
@@ -424,154 +498,187 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                @for ($i=0; $i < ceil($product_number/5); $i++)
-                                    <tr>
-                                        <td class="product-img sound-btn" title="{{$lims_product_list[0+$i*5]->name}}" data-product ="{{$lims_product_list[0+$i*5]->code . ' (' . $lims_product_list[0+$i*5]->name . ')'}}"><img  src="{{url('public/images/product',$lims_product_list[0+$i*5]->base_image)}}" width="100%" />
+                                    @for ($i=0; $i < ceil($product_number/5); $i++) <tr>
+                                        <td class="product-img sound-btn" title="{{$lims_product_list[0+$i*5]->name}}"
+                                            data-product="{{$lims_product_list[0+$i*5]->code . ' (' . $lims_product_list[0+$i*5]->name . ')'}}">
+                                            <img src="{{url('public/images/product',$lims_product_list[0+$i*5]->base_image)}}"
+                                                width="100%" />
                                             <p>{{$lims_product_list[0+$i*5]->name}}</p>
                                         </td>
                                         @if(!empty($lims_product_list[1+$i*5]))
-                                        <td class="product-img sound-btn" title="{{$lims_product_list[1+$i*5]->name}}" data-product ="{{$lims_product_list[1+$i*5]->code . ' (' . $lims_product_list[1+$i*5]->name . ')'}}"><img  src="{{url('public/images/product',$lims_product_list[1+$i*5]->base_image)}}" width="100%" />
+                                        <td class="product-img sound-btn" title="{{$lims_product_list[1+$i*5]->name}}"
+                                            data-product="{{$lims_product_list[1+$i*5]->code . ' (' . $lims_product_list[1+$i*5]->name . ')'}}">
+                                            <img src="{{url('public/images/product',$lims_product_list[1+$i*5]->base_image)}}"
+                                                width="100%" />
                                             <p>{{$lims_product_list[1+$i*5]->name}}</p>
                                         </td>
                                         @else
                                         <td style="border:none;"></td>
                                         @endif
                                         @if(!empty($lims_product_list[2+$i*5]))
-                                        <td class="product-img sound-btn" title="{{$lims_product_list[2+$i*5]->name}}" data-product ="{{$lims_product_list[2+$i*5]->code . ' (' . $lims_product_list[2+$i*5]->name . ')'}}"><img  src="{{url('public/images/product',$lims_product_list[2+$i*5]->base_image)}}" width="100%" />
+                                        <td class="product-img sound-btn" title="{{$lims_product_list[2+$i*5]->name}}"
+                                            data-product="{{$lims_product_list[2+$i*5]->code . ' (' . $lims_product_list[2+$i*5]->name . ')'}}">
+                                            <img src="{{url('public/images/product',$lims_product_list[2+$i*5]->base_image)}}"
+                                                width="100%" />
                                             <p>{{$lims_product_list[2+$i*5]->name}}</p>
                                         </td>
                                         @else
                                         <td style="border:none;"></td>
                                         @endif
                                         @if(!empty($lims_product_list[3+$i*5]))
-                                        <td class="product-img sound-btn" title="{{$lims_product_list[3+$i*5]->name}}" data-product ="{{$lims_product_list[3+$i*5]->code . ' (' . $lims_product_list[3+$i*5]->name . ')'}}"><img  src="{{url('public/images/product',$lims_product_list[3+$i*5]->base_image)}}" width="100%" />
+                                        <td class="product-img sound-btn" title="{{$lims_product_list[3+$i*5]->name}}"
+                                            data-product="{{$lims_product_list[3+$i*5]->code . ' (' . $lims_product_list[3+$i*5]->name . ')'}}">
+                                            <img src="{{url('public/images/product',$lims_product_list[3+$i*5]->base_image)}}"
+                                                width="100%" />
                                             <p>{{$lims_product_list[3+$i*5]->name}}</p>
                                         </td>
                                         @else
                                         <td style="border:none;"></td>
                                         @endif
                                         @if(!empty($lims_product_list[4+$i*5]))
-                                        <td class="product-img sound-btn" title="{{$lims_product_list[4+$i*5]->name}}" data-product ="{{$lims_product_list[4+$i*5]->code . ' (' . $lims_product_list[4+$i*5]->name . ')'}}"><img  src="{{url('public/images/product',$lims_product_list[4+$i*5]->base_image)}}" width="100%" />
+                                        <td class="product-img sound-btn" title="{{$lims_product_list[4+$i*5]->name}}"
+                                            data-product="{{$lims_product_list[4+$i*5]->code . ' (' . $lims_product_list[4+$i*5]->name . ')'}}">
+                                            <img src="{{url('public/images/product',$lims_product_list[4+$i*5]->base_image)}}"
+                                                width="100%" />
                                             <p>{{$lims_product_list[4+$i*5]->name}}</p>
                                         </td>
                                         @else
                                         <td style="border:none;"></td>
                                         @endif
-                                    </tr>
-                                @endfor
+                                        </tr>
+                                        @endfor
                                 </tbody>
                             </table>
                         </div>
-	            	</div>
-        		</div>
-        	</div>
+                    </div>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                              <h4>{{trans('file.Recent Transaction')}}</h4>
-                              <div class="right-column">
-                                <div class="badge badge-primary">{{trans('file.latest')}} 10</div>
-                              </div>
-                              <button class="btn btn-default btn-sm transaction-btn-plus" type="button" data-toggle="collapse" data-target="#transaction" aria-expanded="false" aria-controls="transaction"><i class="ion-plus-circled"></i></button>
-                              <button class="btn btn-default btn-sm transaction-btn-close d-none" type="button" data-toggle="collapse" data-target="#transaction" aria-expanded="false" aria-controls="transaction"><i class="ion-close-circled"></i></button>
+                                <h4>{{trans('file.Recent Transaction')}}</h4>
+                                <div class="right-column">
+                                    <div class="badge badge-primary">{{trans('file.latest')}} 10</div>
+                                </div>
+                                <button class="btn btn-default btn-sm transaction-btn-plus" type="button"
+                                    data-toggle="collapse" data-target="#transaction" aria-expanded="false"
+                                    aria-controls="transaction"><i class="ion-plus-circled"></i></button>
+                                <button class="btn btn-default btn-sm transaction-btn-close d-none" type="button"
+                                    data-toggle="collapse" data-target="#transaction" aria-expanded="false"
+                                    aria-controls="transaction"><i class="ion-close-circled"></i></button>
                             </div>
                             <div class="collapse" id="transaction">
                                 <div class="card card-body">
                                     <ul class="nav nav-tabs" role="tablist">
-                                      <li class="nav-item">
-                                        <a class="nav-link active" href="#sale-latest" role="tab" data-toggle="tab">{{trans('file.Sale')}}</a>
-                                      </li>
-                                      <li class="nav-item">
-                                        <a class="nav-link" href="#draft-latest" role="tab" data-toggle="tab">{{trans('file.Draft')}}</a>
-                                      </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#sale-latest" role="tab"
+                                                data-toggle="tab">{{trans('file.Sale')}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#draft-latest" role="tab"
+                                                data-toggle="tab">{{trans('file.Draft')}}</a>
+                                        </li>
                                     </ul>
                                     <div class="tab-content">
-                                      <div role="tabpanel" class="tab-pane show active" id="sale-latest">
-                                          <div class="table-responsive">
-                                            <table class="table table-striped">
-                                              <thead>
-                                                <tr>
-                                                  <th>{{trans('file.date')}}</th>
-                                                  <th>{{trans('file.reference')}}</th>
-                                                  <th>{{trans('file.customer')}}</th>
-                                                  <th>{{trans('file.grand total')}}</th>
-                                                  <th>{{trans('file.action')}}</th>
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                @foreach($recent_sale as $sale)
-                                                <?php $customer = DB::table('customers')->find($sale->customer_id); ?>
-                                                <tr>
-                                                  <td>{{date('d-m-Y', strtotime($sale->created_at))}}</td>
-                                                  <td>{{$sale->reference_no}}</td>
-                                                  @if (isset($customer->name))
-                                                    <td>{{$customer->name}}</td>  
-                                                  @else
-                                                    <td></td>  
-                                                  @endif
-                                                  <td>{{$sale->grand_total}}</td>
-                                                  <td>
-                                                    <div class="btn-group">
-                                                        @if(in_array("sales-edit", $all_permission))
-                                                        {{-- <a href="{{ route('sales.edit', ['id' => $sale->id]) }}" class="btn btn-success btn-sm" title="Edit"><i class="fa fa-edit"></i></a>&nbsp; --}}
-                                                        @endif
-                                                        @if(in_array("sales-delete", $all_permission))
-                                                        {{ Form::open(['route' => ['sales.destroy', $sale->id], 'method' => 'DELETE'] ) }}
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="Delete"><i class="fa fa-trash"></i></button>
-                                                        {{ Form::close() }}
-                                                        @endif
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                @endforeach
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                      </div>
-                                      <div role="tabpanel" class="tab-pane fade" id="draft-latest">
-                                          <div class="table-responsive">
-                                            <table class="table table-striped">
-                                              <thead>
-                                                <tr>
-                                                  <th>{{trans('file.date')}}</th>
-                                                  <th>{{trans('file.reference')}}</th>
-                                                  <th>{{trans('file.customer')}}</th>
-                                                  <th>{{trans('file.grand total')}}</th>
-                                                  <th>{{trans('file.action')}}</th>
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                @foreach($recent_draft as $draft)
-                                                <?php $customer = DB::table('customers')->find($draft->customer_id); ?>
-                                                <tr>
-                                                  <td>{{date('d-m-Y', strtotime($draft->created_at))}}</td>
-                                                  <td>{{$draft->reference_no}}</td>
-                                                  @if (isset($customer->name))
-                                                    <td>{{$customer->name}}</td>
-                                                  @else
-                                                    <td></td> 
-                                                  @endif
-                                                  <td>{{$draft->grand_total}}</td>
-                                                  <td>
-                                                    <div class="btn-group">
-                                                        @if(in_array("sales-edit", $all_permission))
-                                                        <a href="{{url('sales/'.$draft->id.'/create') }}" class="btn btn-success btn-sm" title="Edit"><i class="fa fa-edit"></i></a>&nbsp;
-                                                        @endif
-                                                        @if(in_array("sales-delete", $all_permission))
-                                                        {{ Form::open(['route' => ['sales.destroy', $draft->id], 'method' => 'DELETE'] ) }}
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirmDelete()" title="Delete"><i class="fa fa-trash"></i></button>
-                                                        {{ Form::close() }}
-                                                        @endif
-                                                    </div>
-                                                  </td>
-                                                </tr>
-                                                @endforeach
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                      </div>
+                                        <div role="tabpanel" class="tab-pane show active" id="sale-latest">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{trans('file.date')}}</th>
+                                                            <th>{{trans('file.reference')}}</th>
+                                                            <th>{{trans('file.customer')}}</th>
+                                                            <th>{{trans('file.grand total')}}</th>
+                                                            <th>{{trans('file.action')}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($recent_sale as $sale)
+                                                        <?php $customer = DB::table('customers')->find($sale->customer_id); ?>
+                                                        <tr>
+                                                            <td>{{date('d-m-Y', strtotime($sale->created_at))}}</td>
+                                                            <td>{{$sale->reference_no}}</td>
+                                                            @if (isset($customer->name))
+                                                            <td>{{$customer->name}}</td>
+                                                            @else
+                                                            <td></td>
+                                                            @endif
+                                                            <td>{{$sale->grand_total}}</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    @if(in_array("sales-edit", $all_permission))
+                                                                    {{-- <a
+                                                                        href="{{ route('sales.edit', ['id' => $sale->id]) }}"
+                                                                        class="btn btn-success btn-sm" title="Edit"><i
+                                                                            class="fa fa-edit"></i></a>&nbsp; --}}
+                                                                    @endif
+                                                                    @if(in_array("sales-delete", $all_permission))
+                                                                    {{ Form::open(['route' => ['sales.destroy',
+                                                                    $sale->id], 'method' => 'DELETE'] ) }}
+                                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                                        onclick="return confirmDelete()"
+                                                                        title="Delete"><i
+                                                                            class="fa fa-trash"></i></button>
+                                                                    {{ Form::close() }}
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade" id="draft-latest">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>{{trans('file.date')}}</th>
+                                                            <th>{{trans('file.reference')}}</th>
+                                                            <th>{{trans('file.customer')}}</th>
+                                                            <th>{{trans('file.grand total')}}</th>
+                                                            <th>{{trans('file.action')}}</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($recent_draft as $draft)
+                                                        <?php $customer = DB::table('customers')->find($draft->customer_id); ?>
+                                                        <tr>
+                                                            <td>{{date('d-m-Y', strtotime($draft->created_at))}}</td>
+                                                            <td>{{$draft->reference_no}}</td>
+                                                            @if (isset($customer->name))
+                                                            <td>{{$customer->name}}</td>
+                                                            @else
+                                                            <td></td>
+                                                            @endif
+                                                            <td>{{$draft->grand_total}}</td>
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    @if(in_array("sales-edit", $all_permission))
+                                                                    <a href="{{url('sales/'.$draft->id.'/create') }}"
+                                                                        class="btn btn-success btn-sm" title="Edit"><i
+                                                                            class="fa fa-edit"></i></a>&nbsp;
+                                                                    @endif
+                                                                    @if(in_array("sales-delete", $all_permission))
+                                                                    {{ Form::open(['route' => ['sales.destroy',
+                                                                    $draft->id], 'method' => 'DELETE'] ) }}
+                                                                    <button type="submit" class="btn btn-danger btn-sm"
+                                                                        onclick="return confirmDelete()"
+                                                                        title="Delete"><i
+                                                                            class="fa fa-trash"></i></button>
+                                                                    {{ Form::close() }}
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -581,12 +688,14 @@
             </div>
         </div>
         <!-- product edit modal -->
-        <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 id="modal_header" class="modal-title"></h5>
-                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -610,78 +719,81 @@
                         $tax_rate_all[] = $tax->rate;
                     }
                 ?>
-                                <div class="form-group">
-                                    <label><strong>{{trans('file.Tax Rate')}}</strong></label>
-                                    <select name="edit_tax_rate" class="form-control">
-                                        @foreach($tax_name_all as $key => $name)
-                                        <option value="{{$key}}">{{$name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div id="edit_unit" class="form-group">
-                                    <label><strong>{{trans('file.Product Unit')}}</strong></label>
-                                    <select name="edit_unit" class="form-control">
-                                    </select>
-                                </div>
-                                <button type="button" name="update_btn" class="btn btn-primary">{{trans('file.update')}}</button>
+                            <div class="form-group">
+                                <label><strong>{{trans('file.Tax Rate')}}</strong></label>
+                                <select name="edit_tax_rate" class="form-control">
+                                    @foreach($tax_name_all as $key => $name)
+                                    <option value="{{$key}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div id="edit_unit" class="form-group">
+                                <label><strong>{{trans('file.Product Unit')}}</strong></label>
+                                <select name="edit_unit" class="form-control">
+                                </select>
+                            </div>
+                            <button type="button" name="update_btn"
+                                class="btn btn-primary">{{trans('file.update')}}</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <!-- add customer modal -->
-        <div id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+        <div id="addCustomer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+            class="modal fade text-left">
             <div role="document" class="modal-dialog">
-              <div class="modal-content">
-                {!! Form::open(['route' => 'customer.store', 'method' => 'post', 'files' => true]) !!}
-                <div class="modal-header">
-                  <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Add Customer')}}</h5>
-                  <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-                  <p class="italic"><small>{{trans('file.The field labels marked with * are required input fields')}}.</small></p>
-                    {{-- <div class="form-group">
-                        <label><strong>{{trans('file.Customer Group')}} *</strong> </label>
-                        <select required class="form-control selectpicker" name="customer_group_id">
-                            @foreach($lims_customer_group_all as $customer_group)
+                <div class="modal-content">
+                    {!! Form::open(['route' => 'customer.store', 'method' => 'post', 'files' => true]) !!}
+                    <div class="modal-header">
+                        <h5 id="exampleModalLabel" class="modal-title">{{trans('file.Add Customer')}}</h5>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                                aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="italic"><small>{{trans('file.The field labels marked with * are required input
+                                fields')}}.</small></p>
+                        {{-- <div class="form-group">
+                            <label><strong>{{trans('file.Customer Group')}} *</strong> </label>
+                            <select required class="form-control selectpicker" name="customer_group_id">
+                                @foreach($lims_customer_group_all as $customer_group)
                                 <option value="{{$customer_group->id}}">{{$customer_group->name}}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
-                    <div class="form-group">
-                        <label><strong>{{trans('file.name')}} *</strong> </label>
-                        <input type="text" name="name" required class="form-control">
+                                @endforeach
+                            </select>
+                        </div> --}}
+                        <div class="form-group">
+                            <label><strong>{{trans('file.name')}} *</strong> </label>
+                            <input type="text" name="name" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>{{trans('file.Email')}}</strong></label>
+                            <input type="text" name="email" placeholder="example@example.com" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>{{trans('file.Phone Number')}} *</strong></label>
+                            <input type="text" name="phone_number" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>{{trans('file.Address')}} *</strong></label>
+                            <input type="text" name="address" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label><strong>{{trans('file.City')}} *</strong></label>
+                            <input type="text" name="city" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="pos" value="1">
+                            <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label><strong>{{trans('file.Email')}}</strong></label>
-                        <input type="text" name="email" placeholder="example@example.com" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label><strong>{{trans('file.Phone Number')}} *</strong></label>
-                        <input type="text" name="phone_number" required class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label><strong>{{trans('file.Address')}} *</strong></label>
-                        <input type="text" name="address" required class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label><strong>{{trans('file.City')}} *</strong></label>
-                        <input type="text" name="city" required class="form-control">
-                    </div>
-                    <div class="form-group">
-                    <input type="hidden" name="pos" value="1">      
-                      <input type="submit" value="{{trans('file.submit')}}" class="btn btn-primary">
-                    </div>
+                    {{ Form::close() }}
                 </div>
-                {{ Form::close() }}
-              </div>
             </div>
         </div>
     </div>
 </section>
 
 <script type="text/javascript">
-
     $("ul#sale").siblings('a').attr('aria-expanded','true');
     $("ul#sale").addClass("show");
     $("ul#sale #sale-pos-menu").addClass("active");
@@ -903,7 +1015,7 @@ $("#print-btn").on("click", function(){
       var divToPrint=document.getElementById('sale-details');
       var newWin=window.open('','Print-Window');
       newWin.document.open();
-      newWin.document.write('<link rel="stylesheet" href="<?php echo asset('public/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
+      newWin.document.write('<link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
       newWin.document.close();
       setTimeout(function(){newWin.close();},10);
 });
@@ -1777,7 +1889,7 @@ function cheque() {
 }
 
 function creditCard() {
-    $.getScript( "public/vendor/stripe/checkout.js" );
+    $.getScript( "vendor/stripe/checkout.js" );
     $(".card-element").show();
     $(".card-errors").show();
     $(".cheque").hide();
@@ -1852,4 +1964,3 @@ $('#product-table').DataTable( {
 <script type="text/javascript" src="https://js.stripe.com/v3/"></script>
 
 @endsection
-

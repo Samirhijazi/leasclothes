@@ -1,31 +1,38 @@
 @extends('layout.main') @section('content')
 @if(session()->has('message'))
-  <div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div> 
+<div class="alert alert-success alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('message') }}</div>
 @endif
 @if(session()->has('not_permitted'))
-  <div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div> 
+<div class="alert alert-danger alert-dismissible text-center"><button type="button" class="close" data-dismiss="alert"
+        aria-label="Close"><span aria-hidden="true">&times;</span></button>{{ session()->get('not_permitted') }}</div>
 @endif
 
 <section>
     <div class="container-fluid">
         @if(in_array("transfers-add", $all_permission))
-            <a href="{{route('transfers.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {{trans('file.add')}} {{trans('file.Transfer')}}</a>
-            <a href="{{url('transfers/transfer_by_csv')}}" class="btn btn-primary"><i class="fa fa-file"></i> {{trans('file.import')}} {{trans('file.Transfer')}}</a>
+        <a href="{{route('transfers.create')}}" class="btn btn-info"><i class="fa fa-plus"></i> {{trans('file.add')}}
+            {{trans('file.Transfer')}}</a>
+        <a href="{{url('transfers/transfer_by_csv')}}" class="btn btn-primary"><i class="fa fa-file"></i>
+            {{trans('file.import')}} {{trans('file.Transfer')}}</a>
         @endif
     </div>
     <div class="table-responsive">
-        <table border="0" cellspacing="5" cellpadding="5" class="p-2 my-2" >
-        <tbody>
-            <form>
-            <tr>
-            <td>{{ __('file.From') }}:</td>
-            <td><input type="date" class="form-control" value="{{ request()->min }}" max="{{ now()->subDay()->format('Y-m-d') }}" id="min" name="min"></td>
-            <td>{{ __('file.To') }}:</td>
-            <td><input type="date" class="form-control" id="max" value="{{ request()->max }}" max="{{ now()->format('Y-m-d') }}" name="max"></td>
-            <td><input class="btn btn-primary" type="submit" value="{{ __('file.Filter') }}"></td>
-            </form>
-        </tr>
-    </tbody></table>
+        <table border="0" cellspacing="5" cellpadding="5" class="p-2 my-2">
+            <tbody>
+                <form>
+                    <tr>
+                        <td>{{ __('file.From') }}:</td>
+                        <td><input type="date" class="form-control" value="{{ request()->min }}"
+                                max="{{ now()->subDay()->format('Y-m-d') }}" id="min" name="min"></td>
+                        <td>{{ __('file.To') }}:</td>
+                        <td><input type="date" class="form-control" id="max" value="{{ request()->max }}"
+                                max="{{ now()->format('Y-m-d') }}" name="max"></td>
+                        <td><input class="btn btn-primary" type="submit" value="{{ __('file.Filter') }}"></td>
+                </form>
+                </tr>
+            </tbody>
+        </table>
         <table id="transfer-table" class="table table-striped transfer-list">
             <thead>
                 <tr>
@@ -51,9 +58,11 @@
                     elseif($transfer->status == 3)
                         $status = trans('file.Sent');
                 ?>
-                <tr class="transfer-link" data-transfer='["{{date($general_setting->date_format, strtotime($transfer->created_at->toDateString()))}}", "{{$transfer->reference_no}}", "{{$status}}", "{{$transfer->id}}", "{{$transfer->fromWarehouse->name}}", "{{$transfer->fromWarehouse->phone}}", "{{$transfer->fromWarehouse->address}}", "{{$transfer->toWarehouse->name}}", "{{$transfer->toWarehouse->phone}}", "{{$transfer->toWarehouse->address}}", "{{$transfer->total_tax}}", "{{$transfer->total_cost}}", "{{$transfer->shipping_cost}}", "{{$transfer->grand_total}}", "{{$transfer->note}}", "{{$transfer->user->name}}", "{{$transfer->user->email}}"]'>
+                <tr class="transfer-link"
+                    data-transfer='["{{date($general_setting->date_format, strtotime($transfer->created_at->toDateString()))}}", "{{$transfer->reference_no}}", "{{$status}}", "{{$transfer->id}}", "{{$transfer->fromWarehouse->name}}", "{{$transfer->fromWarehouse->phone}}", "{{$transfer->fromWarehouse->address}}", "{{$transfer->toWarehouse->name}}", "{{$transfer->toWarehouse->phone}}", "{{$transfer->toWarehouse->address}}", "{{$transfer->total_tax}}", "{{$transfer->total_cost}}", "{{$transfer->shipping_cost}}", "{{$transfer->grand_total}}", "{{$transfer->note}}", "{{$transfer->user->name}}", "{{$transfer->user->email}}"]'>
                     <td>{{$key}}</td>
-                    <td>{{ date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '. $transfer->created_at->toTimeString() }}</td>
+                    <td>{{ date($general_setting->date_format, strtotime($transfer->created_at->toDateString())) . ' '.
+                        $transfer->created_at->toTimeString() }}</td>
                     <td>{{ $transfer->reference_no }}</td>
                     <td>{{ $transfer->fromWarehouse->name }}</td>
                     <td>{{ $transfer->toWarehouse->name }}</td>
@@ -61,30 +70,42 @@
                     <td class="total-tax">{{ $transfer->total_tax }}</td>
                     <td class="grand-total">{{ $transfer->grand_total }}</td>
                     @if($transfer->status == 1)
-                        <td><div class="badge badge-success">{{$status}}</div></td>
+                    <td>
+                        <div class="badge badge-success">{{$status}}</div>
+                    </td>
                     @elseif($transfer->status == 2)
-                        <td><div class="badge badge-danger">{{$status}}</div></td>
+                    <td>
+                        <div class="badge badge-danger">{{$status}}</div>
+                    </td>
                     @else
-                        <td><div class="badge badge-warning">{{$status}}</div></td>
+                    <td>
+                        <div class="badge badge-warning">{{$status}}</div>
+                    </td>
                     @endif
                     <td>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{trans('file.action')}}<span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">{{trans('file.action')}}<span
+                                    class="caret"></span><span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">
                                 <li>
-                                    <button type="button" class="btn btn-link view"><i class="fa fa-eye"></i> {{trans('file.View')}}</button>
+                                    <button type="button" class="btn btn-link view"><i class="fa fa-eye"></i>
+                                        {{trans('file.View')}}</button>
                                 </li>
                                 @if(in_array("transfers-edit", $all_permission))
                                 <li>
-                                    <a href="{{ route('transfers.edit', ['id' => $transfer->id]) }}" class="btn btn-link"><i class="fa fa-edit"></i> {{trans('file.edit')}}</a> 
+                                    <a href="{{ route('transfers.edit', ['id' => $transfer->id]) }}"
+                                        class="btn btn-link"><i class="fa fa-edit"></i> {{trans('file.edit')}}</a>
                                 </li>
                                 @endif
                                 <li class="divider"></li>
                                 @if(in_array("transfers-delete", $all_permission))
-                                {{ Form::open(['route' => ['transfers.destroy', $transfer->id], 'method' => 'DELETE'] ) }}
+                                {{ Form::open(['route' => ['transfers.destroy', $transfer->id], 'method' => 'DELETE'] )
+                                }}
                                 <li>
-                                    <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i class="fa fa-trash"></i> {{trans('file.delete')}}</button>
+                                    <button type="submit" class="btn btn-link" onclick="return confirmDelete()"><i
+                                            class="fa fa-trash"></i> {{trans('file.delete')}}</button>
                                 </li>
                                 {{ Form::close() }}
                                 @endif
@@ -110,25 +131,29 @@
     </div>
 </section>
 
-<div id="transfer-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+<div id="transfer-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    class="modal fade text-left">
     <div role="document" class="modal-dialog">
-      <div class="modal-content">
-        <div class="container mt-3 pb-2 border-bottom">
-            <div class="row">
-                <div class="col-md-3">
-                    <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i class="fa fa-print"></i> {{trans('file.Print')}}</button>
-                </div>
-                <div class="col-md-6">
-                    <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">{{$general_setting->site_title}}</h3>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close" class="close d-print-none"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="col-md-12 text-center">
-                    <i style="font-size: 15px;">{{trans('file.Transfer Details')}}</i>
+        <div class="modal-content">
+            <div class="container mt-3 pb-2 border-bottom">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button id="print-btn" type="button" class="btn btn-default btn-sm d-print-none"><i
+                                class="fa fa-print"></i> {{trans('file.Print')}}</button>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 id="exampleModalLabel" class="modal-title text-center container-fluid">
+                            {{$general_setting->site_title}}</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" id="close-btn" data-dismiss="modal" aria-label="Close"
+                            class="close d-print-none"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <i style="font-size: 15px;">{{trans('file.Transfer Details')}}</i>
+                    </div>
                 </div>
             </div>
-        </div>
             <div id="transfer-content" class="modal-body">
             </div>
             <br>
@@ -145,7 +170,7 @@
                 </tbody>
             </table>
             <div id="transfer-footer" class="modal-body"></div>
-      </div>
+        </div>
     </div>
 </div>
 
@@ -185,7 +210,7 @@
           var divToPrint=document.getElementById('transfer-details');
           var newWin=window.open('','Print-Window');
           newWin.document.open();
-          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('public/vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
+          newWin.document.write('<link rel="stylesheet" href="<?php echo asset('vendor/bootstrap/css/bootstrap.min.css') ?>" type="text/css"><style type="text/css">@media print {.modal-dialog { max-width: 1000px;} }</style><body onload="window.print()">'+divToPrint.innerHTML+'</body>');
           newWin.document.close();
           setTimeout(function(){newWin.close();},10);
     });
