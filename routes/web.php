@@ -357,3 +357,9 @@ Route::get('/connection-test', function () {
 		], 500);
 	}
 });
+
+Route::get('/clear-cache', function () {
+	Artisan::call('config:clear');
+	Artisan::call('cache:clear');
+	return "Cache cleared successfuly";
+});
