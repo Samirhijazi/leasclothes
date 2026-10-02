@@ -330,29 +330,30 @@ Route::group(['middleware' => ['auth', 'active']], function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');
 	Route::get('my-transactions/{year}/{month}', 'HomeController@myTransaction');
-	Route::get('/connection-test', function () {
-		$start = microtime(true);
+});
 
-		try {
-			DB::connection()->getPdo();
+Route::get('/connection-test', function () {
+	$start = microtime(true);
 
-			$connectionTime = round(microtime(true) - $start, 3);
+	try {
+		DB::connection()->getPdo();
 
-			$queryStart = microtime(true);
+		$connectionTime = round(microtime(true) - $start, 3);
 
-			DB::select('SELECT 1');
+		$queryStart = microtime(true);
 
-			$queryTime = round(microtime(true) - $queryStart, 3);
+		DB::select('SELECT 1');
 
-			return response()->json([
-				'database_connection_seconds' => $connectionTime,
-				'query_seconds' => $queryTime,
-			]);
-		} catch (\Throwable $e) {
-			return response()->json([
-				'error' => $e->getMessage(),
-				'elapsed_seconds' => round(microtime(true) - $start, 3),
-			], 500);
-		}
-	});
+		$queryTime = round(microtime(true) - $queryStart, 3);
+
+		return response()->json([
+			'database_connection_seconds' => $connectionTime,
+			'query_seconds' => $queryTime,
+		]);
+	} catch (\Throwable $e) {
+		return response()->json([
+			'error' => $e->getMessage(),
+			'elapsed_seconds' => round(microtime(true) - $start, 3),
+		], 500);
+	}
 });
